@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xiaomi 19 · 重塑想象</title>
+    <!-- 苹果风字体 & 清爽设计 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            padding: 0 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0 80px;
+        }
+
+        /* 苹果风格标题 */
+        .hero {
+            text-align: center;
+            margin-bottom: 70px;
+            padding-top: 30px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1d1d1f 0%, #4a4a4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .hero .subhead {
+            font-size: 24px;
+            font-weight: 400;
+            color: #6e6e73;
+            letter-spacing: -0.01em;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* 型号切换卡片 */
+        .model-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 50px 0 40px;
+        }
+
+        .model-btn {
+            background: white;
+            border: 1.5px solid #e5e5ea;
+            border-radius: 40px;
+            padding: 12px 28px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            letter-spacing: -0.01em;
+        }
+
+        .model-btn:hover {
+            background: #f0f0f4;
+            border-color: #c6c6cc;
+        }
+
+        .model-btn.active {
+            background: #1d1d1f;
+            border-color: #1d1d1f;
+            color: white;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        /* 两列布局：左侧互动手机，右侧参数 */
+        .product-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            background: white;
+            border-radius: 48px;
+            padding: 48px 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+            margin-bottom: 60px;
+            transition: all 0.3s ease;
+        }
+
+        /* 手机模型区域 */
+        .phone-visual {
+            flex: 1 1 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 620px;
+            background: #1c1c1e;
+            border-radius: 52px;
+            box-shadow: 
+                0 30px 50px -20px rgba(0, 0, 0, 0.4),
+                inset 0 0 0 6px #3a3a3c,
+                inset 0 0 0 8px #636366;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform: rotateY(-4deg) rotateX(1deg);
+            cursor: grab;
+            will-change: transform;
+            /* 玻璃纤维质感 + 钛合金边框暗示 */
+            background-image: radial-gradient(circle at 30% 20%, #3a3a3c 0%, #1c1c1e 90%);
+        }
+
+        .phone-mockup:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.01);
+            box-shadow: 
+                0 40px 60px -18px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 6px #4a4a4c,
+                inset 0 0 0 8px #8e8e93;
+        }
+
+        /* 屏幕区域 */
+        .screen {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: #000;
+            border-radius: 38px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            background: linear-gradient(145deg, #1a1a1e, #0a0a0c);
+        }
+
+        .screen-content {
+            text-align: center;
+            z-index: 2;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .screen-content .model-name {
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff, #a1a1a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+        }
+
+        .screen-content .screen-sub {
+            font-size: 14px;
+            color: #8e8e93;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .screen-content .chip-badge {
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            padding: 8px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e5e5ea;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        .screen-content .refresh-rate {
+            font-size: 22px;
+            font-weight: 600;
+            color: #0a84ff;
+            text-shadow: 0 0 15px rgba(10, 132, 255, 0.3);
+        }
+
+        /* 背屏提示 (Pro版) */
+        .secondary-display {
+            position: absolute;
+            top: 80px;
+            right: -16px;
+            width: 52px;
+            height: 120px;
+            background: #0a0a0c;
+            border-radius: 18px;
+            box-shadow: 
+                inset 0 0 0 1px #3a3a3c,
+                0 8px 15px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #8e8e93;
+            font-weight: 600;
+            transform: rotate(3deg);
+            transition: opacity 0.2s ease;
+            background: linear-gradient(135deg, #1c1c1e, #0a0a0c);
+            border: 1px solid #48484a;
+        }
+
+        .secondary-display span {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            letter-spacing: 2px;
+        }
+
+        /* 摄像头模组暗示 */
+        .camera-module {
+            position: absolute;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            height: 130px;
+            background: #2c2c2e;
+            border-radius: 40px;
+            box-shadow: 
+                inset 0 0 0 2px #48484a,
+                0 10px 20px rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 12px;
+            border: 1px solid #5a5a5e;
+        }
+
+        .camera-lens {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 30%, #4a4a4c, #1c1c1e);
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 2px #636366, 0 0 0 2px #0a0a0c;
+            border: 1px solid #000;
+        }
+
+        .camera-lens.large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #3a3a3c, #0a0a0c);
+            box-shadow: inset 0 0 0 3px #8e8e93, 0 0 0 3px #000;
+        }
+
+        /* 右侧参数区域 */
+        .specs-panel {
+            flex: 1 1 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .spec-group {
+            border-bottom: 1px solid #e5e5ea;
+            padding-bottom: 20px;
+        }
+
+        .spec-group:last-child {
+            border-bottom: none;
+        }
+
+        .spec-group h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #6e6e73;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f4;
+            font-size: 16px;
+            color: #1d1d1f;
+        }
+
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            font-weight: 400;
+            color: #6e6e73;
+        }
+
+        .spec-value {
+            font-weight: 600;
+            text-align: right;
+            max-width: 65%;
+        }
+
+        .badge-new {
+            background: #0071e3;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 20px;
+            margin-left: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        /* 底部所有型号共同特性 */
+        .common-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 28px;
+            padding: 28px 24px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid #f0f0f4;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: #6e6e73;
+            line-height: 1.45;
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .hero h1 {
+                font-size: 56px;
+            }
+            .product-showcase {
+                padding: 36px 24px;
+            }
+            .phone-mockup {
+                width: 260px;
+                height: 540px;
+                border-radius: 46px;
+            }
+            .screen {
+                top: 16px;
+                left: 16px;
+                right: 16px;
+                bottom: 16px;
+                border-radius: 34px;
+            }
+            .secondary-display {
+                width: 44px;
+                height: 100px;
+                top: 70px;
+                right: -12px;
+            }
+            .camera-module {
+                width: 110px;
+                height: 110px;
+                bottom: 70px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 42px;
+            }
+            .hero .subhead {
+                font-size: 18px;
+            }
+            .model-btn {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+            .product-showcase {
+                padding: 28px 16px;
+            }
+            .phone-mockup {
+                width: 220px;
+                height: 460px;
+                border-radius: 40px;
+            }
+            .screen-content .model-name {
+                font-size: 26px;
+            }
+            .screen-content .chip-badge {
+                font-size: 14px;
+                padding: 6px 14px;
+            }
+            .camera-module {
+                width: 90px;
+                height: 90px;
+                bottom: 55px;
+            }
+            .camera-lens {
+                width: 30px;
+                height: 30px;
+            }
+            .camera-lens.large {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        /* 动态出现的元素 */
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 70px;
+            font-size: 12px;
+            color: #86868b;
+            border-top: 1px solid #d2d2d7;
+            padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 主标题 -->
+        <div class="hero">
+            <h1>Xiaomi 19</h1>
+            <div class="subhead">钛金属边框 · 玻璃纤维后盖 · 全系 D2 独显芯片</div>
+        </div>
+
+        <!-- 型号切换按钮 -->
+        <div class="model-selector">
+            <button class="model-btn active" data-model="base">普通版</button>
+            <button class="model-btn" data-model="pro">Pro</button>
+            <button class="model-btn" data-model="ultra">Ultra</button>
+            <button class="model-btn" data-model="air">Air</button>
+        </div>
+
+        <!-- 主要展示区：手机模型 + 参数 -->
+        <div class="product-showcase">
+            <!-- 左侧互动手机模型 -->
+            <div class="phone-visual">
+                <div class="phone-mockup" id="phoneMockup">
+                    <!-- 背屏（仅Pro显示） -->
+                    <div class="secondary-display hidden" id="secondaryDisplay">
+                        <span>BACK DISPLAY</span>
+                    </div>
+                    <!-- 屏幕区域 -->
+                    <div class="screen">
+                        <div class="screen-content">
+                            <div class="model-name" id="screenModelName">Xiaomi 19</div>
+                            <div class="screen-sub" id="screenSub">Base</div>
+                            <div class="chip-badge" id="screenChip">玄界O4</div>
+                            <div class="refresh-rate" id="screenRefresh">165 Hz</div>
+                        </div>
+                    </div>
+                    <!-- 摄像头模组（底部） -->
+                    <div class="camera-module" id="cameraModule">
+                        <!-- 镜头会根据型号动态变化，通过JS控制 -->
+                        <div class="camera-lens" id="lens1"></div>
+                        <div class="camera-lens" id="lens2"></div>
+                        <div class="camera-lens" id="lens3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧详细参数 -->
+            <div class="specs-panel" id="specsPanel">
+                <!-- 动态注入JS -->
+            </div>
+        </div>
+
+        <!-- 全系共同特性 -->
+        <div class="common-features">
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3>D2 独显芯片</h3>
+                <p>全系搭载，提升游戏帧率与影像处理能力。</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔊</span>
+                <h3>双影院级环绕音响</h3>
+                <p>Dolby 调校，上下双线性马达，沉浸触感与声场。</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🛡️</span>
+                <h3>钛合金边框</h3>
+                <p>轻盈坚固，搭配玻璃纤维后盖，质感出众。</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔋</span>
+                <h3>小米金沙江电池</h3>
+                <p>高能量密度，全系长续航。</p>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            * 本页面为概念设计，参数基于官方描述。实际产品可能有所不同。
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // 型号数据
+            const models = {
+                base: {
+                    name: 'Xiaomi 19',
+                    sub: '普通版',
+                    chip: '玄界O4 自研芯片',
+                    chipShort: '玄界O4',
+                    refresh: '165 Hz',
+                    battery: '7500 mAh',
+                    weight: '约 195g',
+                    special: '—',
+                    camera: '标准三摄',
+                    hasSecondaryDisplay: false,
+                    lensCount: 3,
+                    largeLensIndex: -1 // 无大底
+                },
+                pro: {
+                    name: 'Xiaomi 19 Pro',
+                    sub: 'Pro',
+                    chip: '骁龙 8 Elite 6',
+                    chipShort: '骁龙8 Elite 6',
+                    refresh: '185 Hz',
+                    battery: '10000 mAh',
+                    weight: '约 215g',
+                    special: '背屏 + 1英寸大底',
+                    camera: '1英寸大底主摄',
+                    hasSecondaryDisplay: true,
+                    lensCount: 3,
+                    largeLensIndex: 0 // 第一个镜头大底
+                },
+                ultra: {
+                    name: 'Xiaomi 19 Ultra',
+                    sub: 'Ultra',
+                    chip: '骁龙 8 Elite',
+                    chipShort: '骁龙8 Elite',
+                    refresh: '165 Hz',
+                    battery: '7500 mAh',
+                    weight: '约 225g',
+                    special: '长焦大底摄像头',
+                    camera: '长焦大底',
+                    hasSecondaryDisplay: false,
+                    lensCount: 3,
+                    largeLensIndex: 2 // 第三个镜头大底（长焦）
+                },
+                air: {
+                    name: 'Xiaomi 19 Air',
+                    sub: 'Air',
+                    chip: '骁龙 8 Gen 5',
+                    chipShort: '骁龙8 Gen5',
+                    refresh: '120 Hz',
+                    battery: '4500 mAh',
+                    weight: '165 g',
+                    special: '超轻 165g',
+                    camera: '标准双摄',
+                    hasSecondaryDisplay: false,
+                    lensCount: 2,
+                    largeLensIndex: -1
+                }
+            };
+
+            // DOM 元素
+            const modelBtns = document.querySelectorAll('.model-btn');
+            const screenModelName = document.getElementById('screenModelName');
+            const screenSub = document.getElementById('screenSub');
+            const screenChip = document.getElementById('screenChip');
+            const screenRefresh = document.getElementById('screenRefresh');
+            const secondaryDisplay = document.getElementById('secondaryDisplay');
+            const specsPanel = document.getElementById('specsPanel');
+            const cameraModule = document.getElementById('cameraModule');
+            const phoneMockup = document.getElementById('phoneMockup');
+
+            // 动态生成参数面板
+            function renderSpecs(modelKey) {
+                const m = models[modelKey];
+                const html = `
+                    <div class="spec-group">
+                        <h2>核心配置</h2>
+                        <div class="spec-item">
+                            <span class="spec-label">处理器</span>
+                            <span class="spec-value">${m.chip}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">独显芯片</span>
+                            <span class="spec-value">D2 独显芯片</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">屏幕刷新率</span>
+                            <span class="spec-value">${m.refresh}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">电池容量</span>
+                            <span class="spec-value">${m.battery} 金沙江</span>
+                        </div>
+                    </div>
+                    <div class="spec-group">
+                        <h2>影像与特色</h2>
+                        <div class="spec-item">
+                            <span class="spec-label">后置摄像头</span>
+                            <span class="spec-value">${m.camera}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">特别搭载</span>
+                            <span class="spec-value">${m.special} ${m.hasSecondaryDisplay ? '<span class="badge-new">背屏</span>' : ''}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">重量</span>
+                            <span class="spec-value">${m.weight} ${modelKey === 'air' ? '<span class="badge-new">超轻</span>' : ''}</span>
+                        </div>
+                    </div>
+                    <div class="spec-group">
+                        <h2>设计与音频</h2>
+                        <div class="spec-item">
+                            <span class="spec-label">边框 & 后盖</span>
+                            <span class="spec-value">钛合金边框 · 玻璃纤维后盖</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">音响</span>
+                            <span class="spec-value">Dolby 调校双影院级环绕</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">马达</span>
+                            <span class="spec-value">上下双线性马达</span>
+                        </div>
+                    </div>
+                `;
+                specsPanel.innerHTML = html;
+            }
+
+            // 更新摄像头模组的镜头数量和大底标识
+            function renderCamera(modelKey) {
+                const m = models[modelKey];
+                // 清空并重新构建
+                cameraModule.innerHTML = '';
+                const lensCount = m.lensCount;
+                for (let i = 0; i < lensCount; i++) {
+                    const lens = document.createElement('div');
+                    lens.className = 'camera-lens';
+                    // 如果是大底镜头，添加 large 类
+                    if (i === m.largeLensIndex) {
+                        lens.classList.add('large');
+                    }
+                    cameraModule.appendChild(lens);
+                }
+                // 如果没有大底，但想稍微突出影像，可以留空
+            }
+
+            // 更新手机模型和参数
+            function updateModel(modelKey) {
+                const m = models[modelKey];
+
+                // 屏幕信息
+                screenModelName.textContent = m.name;
+                screenSub.textContent = m.sub;
+                screenChip.textContent = m.chipShort;
+                screenRefresh.textContent = m.refresh;
+
+                // 背屏显示
+                if (m.hasSecondaryDisplay) {
+                    secondaryDisplay.classList.remove('hidden');
+                    secondaryDisplay.classList.add('visible');
+                } else {
+                    secondaryDisplay.classList.add('hidden');
+                    secondaryDisplay.classList.remove('visible');
+                }
+
+                // 参数面板
+                renderSpecs(modelKey);
+
+                // 摄像头模组
+                renderCamera(modelKey);
+
+                // 给手机一个微小的动效反馈
+                phoneMockup.style.transform = 'rotateY(-2deg) rotateX(0.5deg)';
+                setTimeout(() => {
+                    phoneMockup.style.transform = 'rotateY(-4deg) rotateX(1deg)';
+                }, 120);
+
+                // 按钮激活状态已在事件里处理
+            }
+
+            // 按钮事件绑定
+            modelBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const model = this.dataset.model;
+                    // 移除所有active
+                    modelBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    // 更新界面
+                    updateModel(model);
+                });
+            });
+
+            // 初始化默认选中 base
+            updateModel('base');
+
+            // 添加鼠标移动对手机模型的轻微影响 (互动感)
+            phoneMockup.addEventListener('mousemove', (e) => {
+                const rect = phoneMockup.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateY = ((x - centerX) / centerX) * 6; // -6deg ~ 6deg
+                const rotateX = ((centerY - y) / centerY) * 4; // -4deg ~ 4deg
+                phoneMockup.style.transform = `rotateY(${rotateY - 4}deg) rotateX(${rotateX + 1}deg)`;
+            });
+
+            phoneMockup.addEventListener('mouseleave', () => {
+                phoneMockup.style.transform = 'rotateY(-4deg) rotateX(1deg)';
+            });
+
+        })();
+    </script>
+</body>
+</html>
